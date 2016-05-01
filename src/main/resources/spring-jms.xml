@@ -23,6 +23,7 @@
 
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="jmsConnectionFactory"></property>
+        <property name="defaultDestination" ref="queueDestination"></property>
     </bean>
 
     <!-- 消息队列 -->
