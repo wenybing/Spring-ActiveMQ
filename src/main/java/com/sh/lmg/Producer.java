@@ -1,20 +1,20 @@
 package com.sh.lmg;
 
+import org.apache.activemq.ScheduledMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
+import javax.jms.*;
 
 /**
  * Created by liaomengge on 16/5/1.
  */
 @Component("producer")
 public class Producer {
+
+    private final long ONE_MIN = 60 * 1000;
 
     @Autowired
     private JmsTemplate jmsTemplate;
@@ -27,7 +27,9 @@ public class Producer {
         jmsTemplate.send(destination, new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {
                 System.out.println("send message : " + message);
-                return session.createTextMessage(message);
+                TextMessage textMessage = session.createTextMessage(message);
+                textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, ONE_MIN);
+                return textMessage;
             }
         });
     }

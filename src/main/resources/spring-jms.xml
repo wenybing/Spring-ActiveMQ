@@ -12,10 +12,15 @@
     <bean id="jmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
         <property name="connectionFactory">
             <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-                <property name="brokerURL" value="tcp://localhost:61616"/>
+                <property name="brokerURL"
+                          value="failover:(tcp://localhost:61616)"/>
+                <!--慢消费者设置为true, 快消费者设置为false-->
+                <property name="dispatchAsync" value="true"></property>
+                <property name="useAsyncSend" value="true"></property>
             </bean>
         </property>
         <property name="maxConnections" value="100"></property>
+
     </bean>
 
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -25,7 +30,7 @@
 
     <!-- 消息队列 -->
     <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="p2p-queue"></constructor-arg>
+        <constructor-arg value="p2p-queue3"></constructor-arg>
     </bean>
 
     <!-- 消息监听容器 -->
@@ -36,6 +41,8 @@
         <property name="connectionFactory" ref="jmsConnectionFactory"></property>
         <property name="destination" ref="queueDestination"></property>
         <property name="messageListener" ref="consumerListener"></property>
+        <!--此处不使用事务-->
+        <property name="sessionTransacted" value="false"></property>
     </bean>
 
 </beans>
