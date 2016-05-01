@@ -3,6 +3,7 @@ package com.sh.lmg;
 import org.springframework.stereotype.Component;
 
 import javax.jms.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liaomengge on 16/5/1.
@@ -11,6 +12,11 @@ import javax.jms.*;
 public class ConsumerListener implements MessageListener {
 
     public void onMessage(Message message) {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (message instanceof TextMessage) {
             TextMessage textMessage = (TextMessage) message;
             try {
