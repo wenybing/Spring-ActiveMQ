@@ -6,7 +6,11 @@
 
     <groupId>com.sh.lmg</groupId>
     <artifactId>spring-activemq</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../spring-log4j-activemq</module>
+    </modules>
 
     <properties>
         <spring-version>4.1.9.RELEASE</spring-version>
