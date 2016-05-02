@@ -17,14 +17,15 @@ public class StateMonitor {
 
     private static final String connectorPort = "1099";
     private static final String connectorPath = "/jmxrmi";
-    private static final String jmxDomain = "jmx-domain";// 必须与activemq.xml中的jmxDomainName一致
+    private static final String jmxDomain = "org.apache.activemq";// 必须与activemq.xml中的jmxDomainName一致
+    private static final String brokerName = "lmg-broker";// 必须与activemq.xml中的brokerName一致
 
     public static void main(String[] args) throws Exception {
         JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + connectorPort + connectorPath);
         JMXConnector connector = JMXConnectorFactory.connect(url);
         connector.connect();
         MBeanServerConnection connection = connector.getMBeanServerConnection();
-        ObjectName name = new ObjectName(jmxDomain + ":brokerName=localhost,type=Broker");
+        ObjectName name = new ObjectName(jmxDomain + ":brokerName=" + brokerName + ",type=Broker");
         BrokerViewMBean mBean = MBeanServerInvocationHandler.newProxyInstance(connection, name, BrokerViewMBean.class, true);
 
         for (ObjectName queueName : mBean.getQueues()) {
