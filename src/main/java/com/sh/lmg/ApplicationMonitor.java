@@ -15,9 +15,7 @@ import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by liaomengge on 16/5/1.
- */
+
 public class ApplicationMonitor {
     private volatile static boolean isFull = true;
     private static final long MAX_QUEUE_SIZE = 150;
@@ -51,7 +49,7 @@ public class ApplicationMonitor {
             ObjectName name = null;
             MBeanServerConnection connection = null;
             try {
-                url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + connectorPort + connectorPath);
+                url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://192.168.30.181:" + connectorPort + connectorPath);
                 JMXConnector connector = JMXConnectorFactory.connect(url);
                 connector.connect();
                 connection = connector.getMBeanServerConnection();

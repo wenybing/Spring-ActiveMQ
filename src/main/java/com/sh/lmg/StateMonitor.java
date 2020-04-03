@@ -10,15 +10,13 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-/**
- * Created by liaomengge on 16/5/1.
- */
+
 public class StateMonitor {
 
     private static final String connectorPort = "1099";
     private static final String connectorPath = "/jmxrmi";
     private static final String jmxDomain = "org.apache.activemq";// 必须与activemq.xml中的jmxDomainName一致
-    private static final String brokerName = "lmg-broker";// 必须与activemq.xml中的brokerName一致
+    private static final String brokerName = "wenyb-broker";// 必须与activemq.xml中的brokerName一致
 
     public static void main(String[] args) throws Exception {
         JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + connectorPort + connectorPath);

@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.jms.*;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by liaomengge on 16/5/1.
- */
+
 @Component("consumerListener")
 public class ConsumerListener implements MessageListener {
 

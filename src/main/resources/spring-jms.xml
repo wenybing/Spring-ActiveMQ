@@ -13,12 +13,12 @@
         <property name="connectionFactory">
             <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
                 <property name="brokerURL"
-                          value="failover:(tcp://localhost:61626)"/>
+                          value="failover:(tcp://192.168.30.181:61616)"/>
                 <!--慢消费者设置为true, 快消费者设置为false-->
                 <property name="dispatchAsync" value="true"></property>
                 <property name="useAsyncSend" value="true"></property>
-                <property name="userName" value="system"></property>
-                <property name="password" value="manager"></property>
+                <property name="userName" value="admin"></property>
+                <property name="password" value="admin"></property>
             </bean>
         </property>
         <property name="maxConnections" value="100"></property>

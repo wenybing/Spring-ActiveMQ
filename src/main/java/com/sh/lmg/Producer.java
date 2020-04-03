@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 
 import javax.jms.*;
 
-/**
- * Created by liaomengge on 16/5/1.
- */
+
 @Component("producer")
 public class Producer {
 
-    private final long ONE_MIN = 60 * 1000;
+    private final long ONE_MIN = 30 * 1000;
 
     @Autowired
     private JmsTemplate jmsTemplate;
