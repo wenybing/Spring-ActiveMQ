@@ -1,4 +1,5 @@
-package com.sh.lmg;
+package com.mq.demo;
+
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.jupiter.api.Test;
@@ -7,12 +8,13 @@ import javax.jms.*;
 
 /**
  * @Author wenyabing
- * @Date 2020/4/1 9:42
+ * @Date 2020/4/1 9:18
  */
-public class MQTopicTest {
-    private String brokerURL= "tcp://192.168.30.181:61616";
+public class MQQueueTest {
+//    private String brokerURL= "tcp://192.168.30.181:61616"
+     private String brokerURL= "tcp://localhost:61616";;
     @Test
-    public void TestTopicProducer() throws Exception{
+    public void testMQProducerQueue() throws Exception{
         //1、创建工厂连接对象，需要制定ip和端口号
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
         //2、使用连接工厂创建一个连接对象
@@ -22,12 +24,12 @@ public class MQTopicTest {
         //4、使用连接对象创建会话（session）对象
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         //5、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
-        Topic topic = session.createTopic("test-topic");
+        Queue queue = session.createQueue("test-queue");
         //6、使用会话对象创建生产者对象
-        MessageProducer producer = session.createProducer(topic);
-        System.out.println("我是主题生产者");
+        MessageProducer producer = session.createProducer(queue);
         //7、使用会话对象创建一个消息对象
-        TextMessage textMessage = session.createTextMessage("hello!test-topic");
+        TextMessage textMessage = session.createTextMessage("hello!test-queue");
+        System.out.println("我是队列生产者！");
         //8、发送消息
         producer.send(textMessage);
         System.in.read();
@@ -38,7 +40,7 @@ public class MQTopicTest {
     }
 
     @Test
-    public void TestTopicConsumer() throws Exception{
+    public void TestMQConsumerQueue() throws Exception{
         //1、创建工厂连接对象，需要制定ip和端口号
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
         //2、使用连接工厂创建一个连接对象
@@ -48,11 +50,15 @@ public class MQTopicTest {
         //4、使用连接对象创建会话（session）对象
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         //5、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
-        Topic topic = session.createTopic("test-topic");
+        Queue queue = session.createQueue("test-queue");
+//        Queue queue1 = session.createQueue("test-queue");
+
         //6、使用会话对象创建生产者对象
-        MessageConsumer consumer = session.createConsumer(topic);
-        System.out.println("我是主题消费者");
+        MessageConsumer consumer = session.createConsumer(queue);
+        MessageConsumer consumer1 = session.createConsumer(queue);
+
         //7、向consumer对象中设置一个messageListener对象，用来接收消息
+        System.out.println("我是队列消费者！");
         consumer.setMessageListener(new MessageListener() {
 
             @Override
@@ -76,6 +82,5 @@ public class MQTopicTest {
         session.close();
         connection.close();
     }
-
 
 }

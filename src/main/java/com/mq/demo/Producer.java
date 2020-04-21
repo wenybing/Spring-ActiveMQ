@@ -1,4 +1,4 @@
-package com.sh.lmg;
+package com.mq.demo;
 
 import org.apache.activemq.ScheduledMessage;
 import org.springframework.beans.factory.annotation.Autowired;
